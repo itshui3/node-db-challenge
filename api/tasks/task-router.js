@@ -1,4 +1,5 @@
 const taskDb = require('./task-model');
+const todoDb = require('../todos/todo-model');
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
@@ -19,9 +20,21 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
+  let contexts;
+
+  todoDb.findContextsByTaskId(id)
+    .then( resou => {
+      contexts = resou;
+    })
+    .catch( err => {
+      console.log(err);
+    })
+
   taskDb.findTaskById(id)
     .then( resou => {
       resou.completion = !!resou.completion;
+      resou.contexts = contexts;
+
       res.status(200).json({ message: `status 200: fetched task`, resource: resou })
     })
     .catch( err => {

@@ -6,6 +6,8 @@ module.exports = {
   findTaskById, //findTasksById(id)
   addTask, //addTask(t)
   removeTask, //removeTask(id)
+
+  findTasksByProjectId, //findTasksByProjectId(projectId)
 }
 
 function findTasks() {
@@ -26,4 +28,8 @@ function addTask(t) {
 
 function removeTask(id) {
   return db('tasks').where({ id }).del();
+}
+
+function findTasksByProjectId(projectId) {
+  return db('tasks').where({ project_id: projectId });
 }

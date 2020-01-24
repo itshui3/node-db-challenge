@@ -1,4 +1,6 @@
 const projectDb = require('./project-model');
+const taskDb = require('../tasks/task-model');
+const borrowDb = require('../borrows/borrow-model');
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
@@ -17,9 +19,30 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   const id = req.params.id;
+  let tasks;
+  let resources;
+
+  taskDb.findTasksByProjectId(id)
+    .then( resou => {
+      tasks = resou;
+    })
+    .catch( err => {
+      console.log(err);
+    })
+
+  borrowDb.findResourcesByProjectId(id)
+    .then( resou => {
+      resources = resou;
+    })
+    .catch( err => {
+      console.log(err);
+    })
+
   projectDb.findProjectById(id)
     .then( resou => {
       resou.completion = !!resou.completion;
+      resou.tasks = tasks;
+      resou.resources = resources;
       res.status(200).json({ message: `status 200: fetched project`, resource: resou })
     })
     .catch( err => {

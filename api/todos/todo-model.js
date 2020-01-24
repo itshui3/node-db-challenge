@@ -6,6 +6,8 @@ module.exports = {
   findTodoById, //findTodoById(id)
   addTodo, //addTodo(t)
   removeTodo, //removeTodo(id)
+
+  findContextsByTaskId, //findContextsByTaskId(taskId)
 }
 
 function findTodos() {
@@ -25,4 +27,11 @@ function addTodo(t) {
 
 function removeTodo(id) {
   return db('todos').where({ id }).del();
+}
+
+function findContextsByTaskId(taskId) {
+  return db.select().from('todos as t')
+    .where({ task_id: taskId })
+    .join('contexts as c', 'c.id', 't.context_id')
+    .orderBy('c.id');
 }

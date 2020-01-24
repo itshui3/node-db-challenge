@@ -6,6 +6,8 @@ module.exports = {
   findBorrowById, //findBorrowById(id)
   addBorrow, //addBorrow(b)
   removeBorrow, //removeBorrow(id)
+
+  findResourcesByProjectId, //findResourcesByProjectId(projectId)
 }
 
 function findBorrows() {
@@ -25,4 +27,10 @@ function addBorrow(b) {
 
 function removeBorrow(id) {
   return db('borrows').where({ id }).del();
+}
+
+function findResourcesByProjectId(projectId) {
+  return db.select('').from('borrows as b')
+    .where({ project_id: projectId })
+    .join('resources as r', 'b.resource_id', 'r.id')
 }
