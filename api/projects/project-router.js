@@ -21,7 +21,6 @@ router.get('/:id', (req, res) => {
   const id = req.params.id;
   let tasks;
   let resources;
-
   taskDb.findTasksByProjectId(id)
     .then( resou => {
       tasks = resou;
