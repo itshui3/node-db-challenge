@@ -1,13 +1,13 @@
 const { db } = require('../apiRouter');
 
 module.exports = {
-  findTodo,
+  findTodos,
   findTodoById, //findTodoById(id)
   addTodo, //addTodo(t)
   removeTodo, //removeTodo(id)
 }
 
-function findTodo() {
+function findTodos() {
   return db('todos');
 }
 
