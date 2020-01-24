@@ -2,15 +2,17 @@ const taskDb = require('./task-model');
 const router = require('express').Router();
 
 router.get('/', (req, res) => {
+  console.log(taskDb);
   taskDb.findTasks()
     .then( resou => {
       const booFix = resou.map(task => {
         task.completed = !!task.completed;
-        return proj;
+        return task;
       })
       res.status(200).json({ message: `status 200: fetched tasks`, resource: booFix })
     })
     .catch( err => {
+      console.log(err);
       res.status(500).json({ message: `status 500: internal server error, could not fetch tasks` })
     })
 })

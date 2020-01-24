@@ -1,10 +1,22 @@
 const knex = require('knex');
-const db = knex(require('../knexfile'));
+const db = knex(require('../knexfile').development);
 
 const express = require('express');
 const router = express.Router();
 
-// 8:22 AM: still needs route requires && calls
+const borrowRoute = require('./borrows/borrow-router');
+const contextRoute = require('./contexts/context-router');
+const projectRoute = require('./projects/project-router');
+const resourceRoute = require('./resources/resource-router');
+const taskRoute = require('./tasks/task-router');
+const todoRoute = require('./todos/todo-router');
+
+router.use('/borrows', borrowRoute);
+router.use('/contexts', contextRoute);
+router.use('/projects', projectRoute);
+router.use('/resources', resourceRoute);
+router.use('/tasks', taskRoute);
+router.use('/todos', todoRoute);
 
 const routesInfo = `
   <h1>API</h1>
