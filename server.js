@@ -5,7 +5,7 @@ server.use(express.json());
 server.use(require('helmet')());
 server.use(require('morgan')('common'));
 
-const apiRouter = require('./api/apiRouter');
+const { apiRouter } = require('./api/apiRouter');
 
 server.use('/api', apiRouter);
 
