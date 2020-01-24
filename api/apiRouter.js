@@ -10,19 +10,19 @@ const routesInfo = `
   <h1>API</h1>
 
   <div>
-    Projects
+    <h2>Projects</h2>
   </div>
 
   <div>
-    Resources
+    <h2>Resources</h2>
   </div>
 
   <div>
-    Tasks
+   <h2>Tasks</h2>
   </div>
 
   <div>
-    Contexts
+   <h2>Contexts</h2>
   </div>
 `
 router.get('/', (req, res) => {
