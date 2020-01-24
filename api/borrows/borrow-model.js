@@ -1,0 +1,27 @@
+const { db } = require('../apiRouter');
+
+module.exports = {
+  findBorrow,
+  findBorrowById, //findBorrowById(id)
+  addBorrow, //addBorrow(b)
+  removeBorrow, //removeBorrow(id)
+}
+
+function findBorrow() {
+  return db('borrows');
+}
+
+function findBorrowById(id) {
+  return db('borrows').where({ id }).first();
+}
+
+function addBorrow(b) {
+  return db('borrows').insert(b)
+    .then( ids => {
+      return findBorrowById(ids[0]);
+    });
+}
+
+function removeBorrow(id) {
+  return db('borrows').where({ id }).del();
+}
