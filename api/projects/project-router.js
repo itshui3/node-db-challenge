@@ -25,29 +25,31 @@ router.get('/:id', (req, res) => {
   taskDb.findTasksByProjectId(id)
     .then( resou => {
       tasks = resou;
+      borrowDb.findResourcesByProjectId(id)
+      .then( resou => {
+        if(resou) {
+          resources = resou;
+          projectDb.findProjectById(id)
+            .then( resou => {
+              resou.completion = !!resou.completion;
+              resou.tasks = tasks;
+              resou.resources = resources;
+              res.status(200).json({ message: `status 200: fetched project`, resource: resou })
+            })
+            .catch( err => {
+              res.status(500).json({ message: `status 500: internal server error, could not fetch project` })
+            });
+        }
+      })
+      .catch( err => {
+        console.log(err);
+      })
+      
     })
     .catch( err => {
       console.log(err);
     })
 
-  borrowDb.findResourcesByProjectId(id)
-    .then( resou => {
-      resources = resou;
-    })
-    .catch( err => {
-      console.log(err);
-    })
-
-  projectDb.findProjectById(id)
-    .then( resou => {
-      resou.completion = !!resou.completion;
-      resou.tasks = tasks;
-      resou.resources = resources;
-      res.status(200).json({ message: `status 200: fetched project`, resource: resou })
-    })
-    .catch( err => {
-      res.status(500).json({ message: `status 500: internal server error, could not fetch project` })
-    })
 })
 
 router.post('/', (req, res) => {

@@ -30,7 +30,7 @@ function removeBorrow(id) {
 }
 
 function findResourcesByProjectId(projectId) {
-  return db.select('').from('borrows as b')
+  return db.select('*').from('borrows as b')
     .where({ project_id: projectId })
     .join('resources as r', 'b.resource_id', 'r.id')
 }
